@@ -1,0 +1,36 @@
+UPDATED IMAGE REQUIREMENTS
+
+Existing images (already uploaded):
+1. logo.png - Company logo (48x48px recommended)
+2. Alena.jpg - Instructor photo
+3. woman1.jpg, man2.jpg, woman2.jpg - Testimonial photos
+4. man1.jpg, man3.jpg, woman3.jpg - Additional testimonials
+
+New images needed:
+5. content.png - Icon for Content Creators (100x100px)
+6. business.png - Icon for Business Owners (100x100px)
+7. freelance.png - Icon for Freelancers (100x100px)
+8. beginners.png - Icon for Complete Beginners (100x100px)
+
+9. AE.png - Module 1 icon (60x60px)
+10. 2.png - Module 2 icon (60x60px)
+11. 3.png - Module 3 icon (60x60px)
+12. 4.png - Module 4 icon (60x60px)
+13. 5.png - Module 5 icon (60x60px)
+14. 6.png - Module 6 icon (60x60px)
+
+15. koshka.png - Animated cat for gift section (150px width)
+
+16. youtube-logo.png - YouTube logo for trust bar
+17. tiktok-logo.png - TikTok logo for trust bar
+18. instagram-logo.png - Instagram logo for trust bar
+
+19. tiktok.png - TikTok platform logo for stats
+20. reels.png - Instagram Reels logo for stats
+
+Notes:
+- All icons should have transparent backgrounds
+- Use high-quality PNG format
+- Optimize for web (compress without quality loss)
+- Module icons should be colorful and modern
+- Platform logos can be grayscale or colored 

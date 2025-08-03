@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - ViralCreator Academy</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .contact-page {
+            min-height: 100vh;
+            background: #FEF3E7;
+            padding: 40px 20px;
+        }
+        
+        .contact-page .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .contact-page h1 {
+            text-align: center;
+            color: #1F2937;
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #6B7280;
+            font-size: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .contact-form-section,
+        .contact-info-section {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .contact-form-section h2,
+        .contact-info-section h2 {
+            color: #1F2937;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #8B5CF6;
+        }
+        
+        .submit-button {
+            width: 100%;
+            background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+        
+        .info-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .info-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+        
+        .info-item h3 {
+            margin-bottom: 8px;
+            color: #1F2937;
+            font-size: 20px;
+        }
+        
+        .info-item p {
+            color: #6B7280;
+            margin: 4px 0;
+            line-height: 1.6;
+        }
+        
+        .response-time {
+            background: #F3E7FF;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .response-time p {
+            margin: 5px 0;
+            color: #6B7280;
+        }
+        
+        .response-time strong {
+            color: #8B5CF6;
+        }
+        
+        .faq-preview {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        
+        .faq-preview h3 {
+            color: #1F2937;
+            margin-bottom: 10px;
+        }
+        
+        .faq-preview a {
+            color: #8B5CF6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .faq-preview a:hover {
+            text-decoration: underline;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin: 0 auto;
+            color: #8B5CF6;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-page">
+        <div class="container">
+            <h1>Get in Touch</h1>
+            <p class="subtitle">We're here to help you on your viral journey!</p>
+            
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div class="contact-form-section">
+                    <h2>Send us a Message</h2>
+                    <form class="contact-form" action="#" method="POST">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Select a topic...</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="support">Technical Support</option>
+                                <option value="course">Course Information</option>
+                                <option value="partnership">Partnership Opportunity</option>
+                                <option value="refund">Refund Request</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" placeholder="How can we help you?" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-button">Send Message</button>
+                    </form>
+                </div>
+                
+                <!-- Contact Information -->
+                <div class="contact-info-section">
+                    <h2>Contact Information</h2>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">📧</span>
+                        <div>
+                            <h3>Email</h3>
+                            <p>support@viralcreatoracademy.com</p>
+                            <p>partnerships@viralcreatoracademy.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">💬</span>
+                        <div>
+                            <h3>Live Chat</h3>
+                            <p>Available Monday-Friday</p>
+                            <p>9:00 AM - 6:00 PM EST</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">📍</span>
+                        <div>
+                            <h3>Office</h3>
+                            <p>ViralCreator Academy HQ</p>
+                            <p>1234 Creator Boulevard, Suite 500</p>
+                            <p>Los Angeles, CA 90028</p>
+                            <p>United States</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-icon">🌐</span>
+                        <div>
+                            <h3>Social Media</h3>
+                            <p>Instagram: @viralcreatoracademy</p>
+                            <p>TikTok: @viralcreatoracademy</p>
+                            <p>YouTube: ViralCreator Academy</p>
+                        </div>
+                    </div>
+                    
+                    <div class="response-time">
+                        <p>📬 Average response time: <strong>2-4 hours</strong></p>
+                        <p>🚀 Priority support for PRO members</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-preview">
+                <h3>Before you contact us...</h3>
+                <p>Check out our <a href="index.html#faq">FAQ section</a> for instant answers to common questions!</p>
+            </div>
+            
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+    </div>
+    
+    <script>
+        // Handle form submission
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+            
+            // Here you would normally send the data to your server
+            console.log('Form submitted:', formData);
+            
+            // Show success message
+            alert('Thank you for your message! We\'ll get back to you within 2-4 hours.');
+            
+            // Reset form
+            this.reset();
+        });
+    </script>
+</body>
+</html>

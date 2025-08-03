@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Viral Animated Videos - Learn Animation in 14 Days</title>
+    <meta name="description" content="Join 550+ creators who went from zero to millions of views. Learn viral animation with no artistic skills needed!">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Google Analytics 4 placeholder -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+</head>
+<body>
+    <!-- Launch Banner -->
+    <div class="launch-banner">
+        <span>🎉 LAUNCH WEEK SPECIAL - Save $78 Today Only!</span>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#" class="header-logo">
+                    <img src="images/logo.png" alt="ViralCreator Academy" class="logo-image">
+                    <div class="school-info">
+                        <span class="school-name">ViralCreator Academy</span>
+                        <span class="school-tagline">AI & Design School</span>
+                    </div>
+                </a>
+                <button class="mini-cta" id="mini-cta">Get Started →</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="hero-headline">Create Viral Animated Videos That Get <span class="highlight">MILLIONS</span> of Views in Just 14 Days!</h1>
+            <p class="hero-subheadline">550+ creators skyrocketed from zero views to millions. You're next—no artistic skills needed!</p>
+            
+            <button class="cta-button pulse glow" data-location="hero">
+                <span class="cta-text">YES! Make Me Go Viral →</span>
+                <span class="cta-sparkle">✨</span>
+            </button>
+            
+            <div class="trust-indicators">
+                <span>⚡ Instant access</span>
+                <span>💳 30-day money-back guarantee</span>
+                <span>🌍 Works worldwide</span>
+            </div>
+            
+            <div class="hero-video-wrapper">
+                <div class="video-preview-container">
+                    <img src="https://img.youtube.com/vi/dGYMwTK7STI/maxresdefault.jpg" alt="Animation Preview" class="video-preview-img">
+                    <button class="play-button-large" id="play-button-large">
+                        <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+                            <circle cx="50" cy="50" r="50" fill="white" fill-opacity="0.9"/>
+                            <path d="M40 30L70 50L40 70V30Z" fill="#8B5CF6"/>
+                        </svg>
+                        <span class="play-text">▶️ Watch Video & Turn On Sound</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Video Modal -->
+            <div class="hero-video-modal" id="hero-video-modal">
+                <div class="hero-video-modal-content">
+                    <button class="close-hero-modal" id="close-hero-modal">&times;</button>
+                    <div class="hero-video-container" id="hero-video-container"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet Your Instructor -->
+    <section class="instructor">
+        <div class="container">
+            <h2>Learn From Someone Who's Actually Gone Viral</h2>
+            <div class="instructor-content">
+                <div class="instructor-photo">
+                    <img src="images/Alena.jpg" alt="Alena - Viral Animation Instructor">
+                </div>
+                <div class="instructor-bio">
+                    <p>Hi, I'm Alena! My animations have been viewed over <strong>50 MILLION times</strong> across social media. But here's the crazy part - 4 years ago I had zero followers and couldn't even draw a stick figure. I discovered a simple animation system that changed everything. Now I've helped 550+ students transform from complete beginners to viral content creators. Today, I'm sharing my exact blueprint with you!</p>
+                    
+                    <div class="social-proof-stats">
+                        <div class="stat">
+                            <span class="stat-icon">✨</span>
+                            <span class="stat-number">28K+</span>
+                            <span class="stat-label">Instagram followers</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon">🎬</span>
+                            <span class="stat-number">50M+</span>
+                            <span class="stat-label">total views</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon">🎓</span>
+                            <span class="stat-number">550+</span>
+                            <span class="stat-label">successful students</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-icon">🏆</span>
+                            <span class="stat-number">Featured</span>
+                            <span class="stat-label">on Buzzfeed, Bored Panda</span>
+                        </div>
+                    </div>
+                    
+                    <button class="showreel-btn" data-video="https://youtu.be/eOH2BXHX_pw">
+                        Watch My Showreel
+                    </button>
+                    
+                    <div class="featured-badge">
+                        <span class="badge-text">🏅 Featured instructor on CreatorBootcamp</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="video-modal">
+        <div class="video-modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <div class="video-container" id="video-container"></div>
+        </div>
+    </div>
+
+
+
+    <!-- Who This Is For -->
+    <section class="target-audience">
+        <div class="container">
+            <h2>Perfect For Anyone Who Wants To Stand Out Online</h2>
+            <div class="audience-grid">
+                <div class="audience-card">
+                    <img src="images/content.png" alt="Content Creators" class="target-icon">
+                    <h3>Content Creators</h3>
+                    <p>Stop being ignored! Create thumb-stopping animations that explode your reach</p>
+                </div>
+                <div class="audience-card">
+                    <img src="images/buisness.png" alt="Business Owners" class="target-icon">
+                    <h3>Business Owners</h3>
+                    <p>Cut through the noise with animated ads that convert like crazy</p>
+                </div>
+                <div class="audience-card">
+                    <img src="images/freelance.png" alt="Freelancers" class="target-icon">
+                    <h3>Freelancers</h3>
+                    <p>Add $1000+ animation services to your offerings overnight</p>
+                </div>
+                <div class="audience-card">
+                    <img src="images/beginners.png" alt="Complete Beginners" class="target-icon">
+                    <h3>Complete Beginners</h3>
+                    <p>Zero experience? Perfect! Our students start from scratch</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Opportunity -->
+    <section class="opportunity">
+        <div class="container">
+            <h2>Short-Form Video Is Taking Over - Don't Miss Out!</h2>
+            <div class="opportunity-stats">
+                <div class="big-stat gradient-card">
+                    <div class="stat-visual">
+                        <div class="platform-logo placeholder">TikTok</div>
+                        <div class="platform-logo placeholder">Reels</div>
+                    </div>
+                    <span class="stat-value count-up" data-target="2.5">0</span>
+                    <span class="stat-unit">BILLION</span>
+                    <span class="stat-desc">daily active users on TikTok & Reels</span>
+                </div>
+                <div class="big-stat gradient-card">
+                    <div class="stat-visual">
+                        <canvas id="growth-chart" width="120" height="80"></canvas>
+                    </div>
+                    <span class="stat-value count-up" data-target="91">0</span>
+                    <span class="stat-unit">%</span>
+                    <span class="stat-desc">of businesses use video marketing</span>
+                </div>
+                <div class="big-stat gradient-card">
+                    <div class="stat-visual money-stack">
+                        <span class="dollar-sign">$</span>
+                    </div>
+                    <span class="stat-value count-up" data-target="235">0</span>
+                    <span class="stat-unit">BILLION</span>
+                    <span class="stat-desc">video marketing industry by 2025</span>
+                </div>
+            </div>
+            <p class="opportunity-text">While everyone else fights for attention with boring content, you'll be creating animations that stop the scroll and go viral!</p>
+            <p class="emotional-question">Will you watch others go viral—or will YOU become the next sensation?</p>
+        </div>
+    </section>
+
+    <!-- What's Inside -->
+    <section class="curriculum">
+        <div class="container">
+            <h2>The Complete 6-Module Viral Animation System</h2>
+            <div class="modules">
+                <div class="module">
+                    <div class="module-icon-img placeholder">💡</div>
+                    <div class="module-content">
+                        <span class="module-number">Module 1</span>
+                        <h3>Viral Psychology</h3>
+                        <p>Discover the exact formulas that make content explode online</p>
+                    </div>
+                </div>
+                <div class="module">
+                    <div class="module-icon-img placeholder">🎨</div>
+                    <div class="module-content">
+                        <span class="module-number">Module 2</span>
+                        <h3>Animation Basics in After Effects</h3>
+                        <p>Master the tools pros use (easier than you think!)</p>
+                    </div>
+                </div>
+                <div class="module">
+                    <div class="module-icon-img placeholder">⚡</div>
+                    <div class="module-content">
+                        <span class="module-number">Module 3</span>
+                        <h3>Character Animation Made Simple</h3>
+                        <p>Bring any character to life - even stick figures go viral!</p>
+                    </div>
+                </div>
+                <div class="module">
+                    <div class="module-icon-img placeholder">🛠️</div>
+                    <div class="module-content">
+                        <span class="module-number">Module 4</span>
+                        <h3>Speed Workflow Secrets</h3>
+                        <p>Create stunning animations in 30 minutes or less</p>
+                    </div>
+                </div>
+                <div class="module">
+                    <div class="module-icon-img placeholder">🎬</div>
+                    <div class="module-content">
+                        <span class="module-number">Module 5</span>
+                        <h3>Platform Optimization</h3>
+                        <p>Tailor your content for maximum reach on each platform</p>
+                    </div>
+                </div>
+                <div class="module">
+                    <div class="module-icon-img placeholder">💰</div>
+                    <div class="module-content">
+                        <span class="module-number">Module 6</span>
+                        <h3>Monetization Mastery</h3>
+                        <p>Turn your animations into a $5K+/month business</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Everything You Get -->
+    <section class="package">
+        <div class="container">
+            <div class="toolkit-header">
+                <img src="images/koshka2.png" alt="Gift Cat" class="gift-cat">
+                <h2>Your Complete Viral Animation Toolkit (Worth $547)</h2>
+            </div>
+            <div class="package-content">
+                
+                <div class="toolkit-grid">
+                    <div class="toolkit-item">
+                        <div class="toolkit-icon">🎥</div>
+                        <div class="toolkit-text">
+                            <h4>6 HD Video Modules</h4>
+                            <p>Lifetime access to premium content</p>
+                            <span class="toolkit-value">$197 value</span>
+                        </div>
+                    </div>
+                    <div class="toolkit-item">
+                        <div class="toolkit-icon">📁</div>
+                        <div class="toolkit-text">
+                            <h4>50+ Animation Templates</h4>
+                            <p>Done-for-you professional templates</p>
+                            <span class="toolkit-value">$97 value</span>
+                        </div>
+                    </div>
+                    <div class="toolkit-item">
+                        <div class="toolkit-icon">👥</div>
+                        <div class="toolkit-text">
+                            <h4>Private Discord Community</h4>
+                            <p>Connect with fellow creators</p>
+                            <span class="toolkit-value">$97 value</span>
+                        </div>
+                    </div>
+                    <div class="toolkit-item">
+                        <div class="toolkit-icon">⚡</div>
+                        <div class="toolkit-text">
+                            <h4>Export Presets</h4>
+                            <p>Platform-specific optimization</p>
+                            <span class="toolkit-value">$47 value</span>
+                        </div>
+                    </div>
+                    <div class="toolkit-item">
+                        <div class="toolkit-icon">📄</div>
+                        <div class="toolkit-text">
+                            <h4>Client Contracts</h4>
+                            <p>Professional templates ready to use</p>
+                            <span class="toolkit-value">$67 value</span>
+                        </div>
+                    </div>
+                    <div class="toolkit-item">
+                        <div class="toolkit-icon">🎙️</div>
+                        <div class="toolkit-text">
+                            <h4>Weekly Q&A Calls</h4>
+                            <p>3 months of live support</p>
+                            <span class="toolkit-value">$42 value</span>
+                        </div>
+                    </div>
+                    <div class="toolkit-item">
+                        <div class="toolkit-icon">🏆</div>
+                        <div class="toolkit-text">
+                            <h4>Certificate of Completion</h4>
+                            <p>Professional certification</p>
+                            <span class="toolkit-value">Included</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="value-box animated-value">
+                    <p class="total-value">Total Value: <span class="crossed">$547</span></p>
+                    <p class="special-price">Launch Week Special: <span class="price pulse-price">$19</span></p>
+                    <p class="savings">You Save $528!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>Real Students, Real Results</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <img src="images/woman1.jpg" alt="Sarah M." class="testimonial-photo">
+                    <h4>Sarah M., USA 🇺🇸</h4>
+                    <p>"My first animation got 2.3M views! I gained 45K followers in 2 weeks and now have brands reaching out for paid collaborations!"</p>
+                </div>
+                <div class="testimonial-card">
+                    <img src="images/man2.jpg" alt="James K." class="testimonial-photo">
+                    <h4>James K., UK 🇬🇧</h4>
+                    <p>"Went from 500 to 38K followers. Now charging $500 per animated video for clients. Best investment ever!"</p>
+                </div>
+                <div class="testimonial-card">
+                    <img src="images/woman2.jpg" alt="Lisa T." class="testimonial-photo">
+                    <h4>Lisa T., Canada 🇨🇦</h4>
+                    <p>"I literally couldn't draw a stick figure. Now my animations regularly hit 500K+ views. Alena's system is magic!"</p>
+                </div>
+            </div>
+            
+            <!-- Student Works Gallery -->
+            <div class="student-works-gallery">
+                <h3>See What Our Students Create</h3>
+                <div class="works-grid">
+                    <div class="work-item placeholder placeholder-video" data-video-id="">
+                        <span>Student Work Video 1 - To Be Added</span>
+                    </div>
+                    <div class="work-item placeholder placeholder-video" data-video-id="">
+                        <span>Student Work Video 2 - To Be Added</span>
+                    </div>
+                    <div class="work-item placeholder placeholder-video" data-video-id="">
+                        <span>Student Work Video 3 - To Be Added</span>
+                    </div>
+                    <div class="work-item placeholder placeholder-video" data-video-id="">
+                        <span>Student Work Video 4 - To Be Added</span>
+                    </div>
+                    <div class="work-item placeholder placeholder-video" data-video-id="">
+                        <span>Student Work Video 5 - To Be Added</span>
+                    </div>
+                    <div class="work-item placeholder placeholder-video" data-video-id="">
+                        <span>Student Work Video 6 - To Be Added</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real Success Stories -->
+    <section class="success-stories">
+        <div class="container">
+            <h2>Real Success Stories From Our Students</h2>
+            <div class="success-carousel">
+                <div class="success-item active">
+                    <div class="before-after">
+                        <div class="ba-card before">
+                            <h3>BEFORE</h3>
+                            <div class="ba-stats">
+                                <div class="ba-stat">
+                                    <span class="ba-number">127</span>
+                                    <span class="ba-label">Followers</span>
+                                </div>
+                                <div class="ba-stat">
+                                    <span class="ba-number">~500</span>
+                                    <span class="ba-label">Avg Views</span>
+                                </div>
+                                <div class="ba-stat">
+                                    <span class="ba-number">$0</span>
+                                    <span class="ba-label">Revenue</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ba-arrow">→</div>
+                        <div class="ba-card after">
+                            <h3>AFTER</h3>
+                            <div class="ba-stats">
+                                <div class="ba-stat">
+                                    <span class="ba-number success-color">45.2K</span>
+                                    <span class="ba-label">Followers</span>
+                                </div>
+                                <div class="ba-stat">
+                                    <span class="ba-number success-color">2.3M+</span>
+                                    <span class="ba-label">Viral Views</span>
+                                </div>
+                                <div class="ba-stat">
+                                    <span class="ba-number success-color">$4,800/mo</span>
+                                    <span class="ba-label">Revenue</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="success-quote">"In just 6 weeks, I went from nobody to viral sensation!"</p>
+                    <p class="success-author">- Emma Rodriguez, @emmaanimations</p>
+                </div>
+                
+                <div class="global-impact-section">
+                    <h2>Our Global Impact in Numbers</h2>
+                    
+                    <div class="impact-grid">
+                        <!-- Анимированный график роста -->
+                        <div class="impact-card">
+                            <div class="chart-container">
+                                <canvas id="growthChart" width="300" height="200"></canvas>
+                            </div>
+                            <h3>Exponential Growth</h3>
+                            <p>Our students' reach grows 10x every month</p>
+                        </div>
+                        
+                        <!-- Круговая диаграмма платформ -->
+                        <div class="impact-card">
+                            <div class="platforms-chart">
+                                <div class="platform-stat tiktok" style="--percentage: 45;">
+                                    <span class="platform-name">TikTok</span>
+                                    <span class="platform-percent">45%</span>
+                                </div>
+                                <div class="platform-stat youtube" style="--percentage: 30;">
+                                    <span class="platform-name">YouTube</span>
+                                    <span class="platform-percent">30%</span>
+                                </div>
+                                <div class="platform-stat instagram" style="--percentage: 25;">
+                                    <span class="platform-name">Instagram</span>
+                                    <span class="platform-percent">25%</span>
+                                </div>
+                            </div>
+                            <h3>Platform Distribution</h3>
+                            <p>Where our students go viral</p>
+                        </div>
+                        
+                        <!-- Live счетчик -->
+                        <div class="impact-card">
+                            <div class="live-counter">
+                                <span class="counter-number" id="liveViews">250,847,293</span>
+                                <span class="counter-label">Total Views & Growing</span>
+                                <div class="pulse-indicator"></div>
+                            </div>
+                            <h3>Real-Time Impact</h3>
+                            <p>Watch our community grow live</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Анимированная лента с достижениями -->
+                    <div class="achievements-ticker">
+                        <div class="ticker-content">
+                            <span>🎉 Sarah reached 1M views</span>
+                            <span>💰 Mike earned $5000 this month</span>
+                            <span>🚀 Emma gained 50K followers</span>
+                            <span>⭐ 47 countries represented</span>
+                            <span>🏆 550+ success stories</span>
+                            <span>🎉 Sarah reached 1M views</span>
+                            <span>💰 Mike earned $5000 this month</span>
+                            <span>🚀 Emma gained 50K followers</span>
+                            <span>⭐ 47 countries represented</span>
+                            <span>🏆 550+ success stories</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="viral-counter">
+                    <h3>Our Students' Combined Impact</h3>
+                    <div class="impact-stats">
+                        <div class="impact-stat">
+                            <span class="impact-icon">👁️</span>
+                            <span class="impact-number count-up" data-target="127">0</span>
+                            <span class="impact-unit">MILLION+</span>
+                            <span class="impact-label">Total Views</span>
+                        </div>
+                        <div class="impact-stat">
+                            <span class="impact-icon">❤️</span>
+                            <span class="impact-number count-up" data-target="8.2">0</span>
+                            <span class="impact-unit">MILLION</span>
+                            <span class="impact-label">Likes & Engagement</span>
+                        </div>
+                        <div class="impact-stat">
+                            <span class="impact-icon">💰</span>
+                            <span class="impact-number">$</span><span class="count-up" data-target="1.3">0</span>
+                            <span class="impact-unit">MILLION</span>
+                            <span class="impact-label">Revenue Generated</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2>Launch Week Special Expires Soon!</h2>
+            <div class="countdown-container">
+                <p class="countdown-label">🎯 Offer Expires In:</p>
+                <div class="countdown-timer" id="timer">47:59:59</div>
+                <p class="price-warning">Price increases to $97 after timer expires!</p>
+            </div>
+            
+            <div class="urgency-indicators">
+                <div class="urgency-item">
+                    <div class="progress-container">
+                        <span class="progress-label">Only <span class="spots-left">73</span>/100 spots left</span>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" style="width: 27%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="urgency-item">
+                    <span class="live-indicator">🔴</span>
+                    <span class="live-text"><span class="viewers-count">3</span> people viewing this page</span>
+                </div>
+                <div class="urgency-item">
+                    <span class="enrollment-text">Last enrollment: <span class="last-enrollment">12 minutes ago</span></span>
+                </div>
+            </div>
+            
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>🎯 STARTER</h3>
+                    <div class="price">
+                        <span class="old-price">$97</span>
+                        <span class="current-price">$19</span>
+                    </div>
+                    <p class="price-note">(One-time payment)</p>
+                    <ul>
+                        <li>✅ Complete 6-module course</li>
+                        <li>✅ 50+ animation templates</li>
+                        <li>✅ Discord community</li>
+                        <li>✅ Platform export presets</li>
+                        <li>✅ 30-day guarantee</li>
+                    </ul>
+                    <button class="cta-button" data-location="pricing-starter">
+                        <span class="cta-text">Claim My Spot Now →</span>
+                    </button>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="badge">⭐ BEST VALUE</div>
+                    <h3>🔥 PRO</h3>
+                    <p class="popularity">90% of students choose this!</p>
+                    <div class="price">
+                        <span class="old-price">$197</span>
+                        <span class="current-price">$39</span>
+                    </div>
+                    <p class="price-note">(One-time payment • No monthly fees)</p>
+                    <ul>
+                        <li>✅ Everything in Starter PLUS:</li>
+                        <li>✅ Personal mentorship from Alena—your shortcut to viral success!</li>
+                        <li>✅ Weekly group coaching calls</li>
+                        <li>✅ Advanced animation pack</li>
+                        <li>✅ Client-getting templates</li>
+                    </ul>
+                    <button class="cta-button glow" data-location="pricing-pro">
+                        <span class="cta-text">Start My Viral Journey →</span>
+                        <span class="cta-sparkle">🚀</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="payment-info">
+                <span>🔒 Secure checkout</span>
+                <span>💳 All major cards accepted</span>
+                <span>⚡ Instant access</span>
+            </div>
+            
+            <div class="scarcity-message">
+                ⚠️ Only 27 spots left at this price!
+            </div>
+            
+            <div class="social-counter">
+                <p>Join <span class="enrolled-count">127</span> students enrolled this week</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guarantee Section -->
+    <section class="guarantee">
+        <div class="container">
+            <h2>Absolutely No Risk—Create or It's Free!</h2>
+            <div class="guarantee-badge-wrapper">
+                <div class="guarantee-badge">
+                    <div class="badge-outer">
+                        <div class="badge-inner">
+                            <span class="badge-icon">🛡️</span>
+                            <h3>30-DAY</h3>
+                            <p>MONEY-BACK</p>
+                            <p class="guarantee-text">GUARANTEE</p>
+                        </div>
+                    </div>
+                    <div class="badge-shine"></div>
+                </div>
+            </div>
+            <p class="guarantee-description">Create your first animation within 30 days or get a full refund. No questions asked. I'm that confident you'll love it!</p>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <h2>Got Questions? We've Got Answers</h2>
+            <div class="faq-items">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Q: I have zero artistic ability. Will this work for me?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>A: Absolutely! 80% of our successful students started with no art skills. Our templates and system do the heavy lifting. You'll be amazed at what you can create!</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Q: How much time does it take?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>A: Just 30 minutes a day. Most students create their first viral animation within a week. Our speed workflow secrets help you create stunning animations in record time!</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Q: Do I need expensive software?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>A: You'll need After Effects (free trial available). That's it! No expensive equipment or additional software required.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Q: Is this really just $19?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>A: Yes! This is our launch week special. One-time payment, no hidden fees, no monthly subscriptions. You get lifetime access for just $19!</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Q: What if I'm not creative?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>A: Perfect! Our system is designed for non-creative people. We provide templates, formulas, and step-by-step instructions. Creativity is learned, not born!</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Q: How fast will I see results?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>A: Most students create their first animation within 7 days and see significant growth within 30 days. Some have gone viral with their very first animation!</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Q: How quickly can I start making money?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>A: Many students land their first client within 2-3 weeks of starting. We include client-getting templates and pricing strategies to help you monetize fast!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Your Viral Breakthrough Is One Click Away</h2>
+            <div class="testimonial-highlight">
+                "My first video went viral—2.3M views in days!" – Sarah M.
+            </div>
+            <p class="emotional-text">
+                Right now, someone just like you is deciding whether to take action or keep scrolling. 
+                The difference? They're about to transform their content game forever.
+            </p>
+            <p class="emotional-text">
+                For less than a pizza dinner, you could be creating animations that millions will watch.
+            </p>
+            <button class="cta-button pulse massive glow" data-location="final">
+                <span class="cta-text">YES! Make Me Viral for Just $19 →</span>
+                <span class="cta-sparkle">✨</span>
+            </button>
+            <div class="final-bullets">
+                <span>✅ Start learning in 2 minutes</span>
+                <span>✅ 30-day money-back guarantee</span>
+                <span>✅ Join 550+ successful creators</span>
+                <span>✅ Limited time 81% discount</span>
+                <span>✅ No monthly fees. Ever.</span>
+            </div>
+            <p class="urgency">⚠️ Price goes back to $97 when timer expires!</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Viral Animator Pro. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms-of-service.html">Terms of Service</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Exit Intent Popup -->
+    <div class="exit-popup" id="exit-popup">
+        <div class="exit-popup-content">
+            <button class="close-popup" id="close-popup">&times;</button>
+            <h3>Wait! Before you go—grab your LAST chance to create viral content for just $19!</h3>
+            <button class="cta-button" data-location="exit-intent">Claim My Spot →</button>
+        </div>
+    </div>
+
+    <!-- Social Proof Notifications -->
+    <div class="social-proof-notification" id="social-proof">
+        <span class="notification-text"></span>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progress-bar"></div>
+
+    <!-- Sticky Buy Button (Mobile) -->
+    <div class="sticky-buy-button" id="sticky-buy">
+        <button class="cta-button" data-location="sticky">Get Started - $19 →</button>
+    </div>
+
+    <!-- Sticky Video Preview -->
+                <div class="sticky-video-preview" id="sticky-video">
+                <div class="sticky-video-content" id="sticky-video-content">
+                    <iframe src="https://www.youtube.com/embed/dGYMwTK7STI?mute=1&controls=0&modestbranding=1&playsinline=1&rel=0&disablekb=1" frameborder="0" style="pointer-events: none;"></iframe>
+                    <div class="sticky-video-overlay"></div>
+                </div>
+                <button class="sticky-video-close" id="close-sticky-video">×</button>
+                <div class="sticky-video-hint">Click to play with sound</div>
+            </div>
+
+    <!-- Модальное окно формы оплаты -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-modal-content">
+            <span class="close-payment-modal">&times;</span>
+            
+            <div class="modal-header">
+                <h2>🚀 You're One Step Away from Going Viral!</h2>
+                <p class="urgency-text">Complete your order in the next <span class="countdown-timer">10:00</span> to lock in your discount!</p>
+            </div>
+            
+            <form class="payment-form" id="paymentForm">
+                <!-- Выбор пакета -->
+                <div class="package-selection">
+                    <label class="package-option">
+                        <input type="radio" name="package" value="starter" checked>
+                        <div class="package-card">
+                            <h3>Starter</h3>
+                            <p class="price">$19</p>
+                            <p class="savings">Save $78!</p>
+                        </div>
+                    </label>
+                    <label class="package-option best-value">
+                        <input type="radio" name="package" value="pro">
+                        <div class="package-card">
+                            <span class="badge">BEST VALUE</span>
+                            <h3>Pro</h3>
+                            <p class="price">$39</p>
+                            <p class="savings">Save $158!</p>
+                        </div>
+                    </label>
+                </div>
+                
+                <!-- Форма данных -->
+                <div class="form-section">
+                    <h3>Your Information</h3>
+                    
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" name="fullName" required placeholder="John Doe">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" required placeholder="john@example.com">
+                        <small>📧 Instant access will be sent to this email</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Phone Number (Optional)</label>
+                        <input type="tel" name="phone" id="phoneInput" placeholder="+1 (555) 123-4567">
+                        <small>For order updates only</small>
+                        <input type="hidden" name="country" id="countryHidden" value="">
+                    </div>
+                </div>
+                
+                <!-- Гарантии и trust badges -->
+                <div class="trust-section">
+                    <div class="guarantee-box">
+                        <div class="guarantee-icon">🛡️</div>
+                        <div class="guarantee-text">
+                            <p><strong>30-Day Money Back Guarantee</strong></p>
+                            <p>Try it risk-free. Love it or get a full refund!</p>
+                        </div>
+                    </div>
+                    
+                    <div class="security-badges">
+                        <span>🔒 SSL Secured</span>
+                        <span>💳 Secure Payment</span>
+                        <span>🛡️ Safe Checkout</span>
+                    </div>
+                </div>
+                
+                <!-- CTA кнопка -->
+                <button type="submit" class="submit-payment-btn">
+                    <span class="btn-text">COMPLETE MY ORDER & GO VIRAL</span>
+                    <span class="btn-price">for just $19</span>
+                </button>
+                
+                <p class="terms-text">
+                    By purchasing, you agree to our <a href="terms-of-service.html" target="_blank">Terms of Service</a> 
+                    and <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
+                </p>
+            </form>
+            
+            <!-- Дополнительная мотивация -->
+            <div class="modal-footer">
+                <p class="social-proof">🔥 <strong>73 people</strong> bought this in the last 24 hours</p>
+                <p class="stock-warning">⚠️ Only <strong>27 spots</strong> left at this price!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
