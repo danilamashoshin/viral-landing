@@ -118,25 +118,6 @@ function handleExitIntent(e) {
     }
 }
 
-// CTA Click Tracking
-function trackCTAClick(button) {
-    const location = button.dataset.location;
-    const text = button.innerText;
-    
-    // Google Analytics tracking
-    if (typeof gtag !== 'undefined') {
-        gtag('event', 'click_cta', {
-            'button_text': text,
-            'button_location': location
-        });
-    }
-    
-    // Scroll to pricing section
-    const pricingSection = document.getElementById('pricing');
-    if (pricingSection) {
-        pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
-}
 
 // Initialize all CTA buttons
 function initCTAButtons() {
@@ -144,17 +125,54 @@ function initCTAButtons() {
     ctaButtons.forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
-            trackCTAClick(button);
+            e.stopPropagation();
+            
+            const location = button.dataset.location;
+            const text = button.innerText;
+            
+            // Google Analytics tracking
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'click_cta', {
+                    'button_text': text,
+                    'button_location': location
+                });
+            }
+            
+            // Проверяем, находится ли кнопка в блоке тарифов
+            if (location === 'pricing-starter' || location === 'pricing-pro') {
+                // Кнопки в блоке тарифов открывают Lemon Squeezy
+                let redirectUrl = '';
+                
+                if (location === 'pricing-pro') {
+                    // Pro пакет за $39
+                    redirectUrl = 'https://animator-procrastinator.lemonsqueezy.com/buy/c071de66-84dc-4489-85a3-2ea906630c29';
+                } else {
+                    // Starter пакет за $19
+                    redirectUrl = 'https://animator-procrastinator.lemonsqueezy.com/buy/7f00d6f8-fadd-47a0-aa1d-5fa7219519e8';
+                }
+                
+                // Открываем в новой вкладке
+                window.open(redirectUrl, '_blank');
+            } else {
+                // Все остальные кнопки ведут на блок тарифов
+                const pricingSection = document.getElementById('pricing');
+                if (pricingSection) {
+                    pricingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
         });
     });
     
-    // Mini CTA in header
-    miniCTA.addEventListener('click', () => {
-        const pricingSection = document.getElementById('pricing');
-        if (pricingSection) {
-            pricingSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    });
+    // Mini CTA in header - ведет на блок тарифов
+    if (miniCTA) {
+        miniCTA.addEventListener('click', (e) => {
+            e.preventDefault();
+            const pricingSection = document.getElementById('pricing');
+            if (pricingSection) {
+                pricingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
 }
 
 // Close popup
@@ -795,216 +813,11 @@ async function detectCountryByIP() {
 // Глобальная переменная для хранения данных о локации
 let userLocation = null;
 
-// Инициализация формы оплаты
+// Инициализация формы оплаты (больше не используется, но оставляем для совместимости)
 async function initPaymentForm() {
-    // Определяем страну пользователя
-    userLocation = await detectCountryByIP();
-    
-    // Устанавливаем значение в скрытое поле
-    const countryHidden = document.getElementById('countryHidden');
-    if (countryHidden) {
-        countryHidden.value = userLocation.country;
-    }
-    
-    // Обновляем placeholder для телефона
-    const phoneInput = document.getElementById('phoneInput');
-    if (phoneInput) {
-        // Устанавливаем placeholder в зависимости от страны
-        const phonePlaceholders = {
-            'US': '+1 (555) 123-4567',
-            'CA': '+1 (555) 123-4567',
-            'GB': '+44 20 1234 5678',
-            'AU': '+61 2 1234 5678',
-            'RU': '+7 (999) 123-45-67',
-            'DE': '+49 30 12345678',
-            'FR': '+33 1 23 45 67 89',
-            'IN': '+91 98765 43210',
-            'BR': '+55 11 98765-4321',
-            'JP': '+81 90-1234-5678'
-        };
-        
-        phoneInput.placeholder = phonePlaceholders[userLocation.country] || 
-                                userLocation.phoneCode + ' Phone number';
-        
-        // Автоматическая маска при вводе
-        phoneInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/[^\d+]/g, '');
-            
-            // Если пользователь начинает с +, сохраняем его ввод
-            if (value.startsWith('+')) {
-                return;
-            }
-            
-            // Убираем все не-цифры для форматирования
-            value = value.replace(/\D/g, '');
-            
-            // Применяем маску в зависимости от страны
-            switch(userLocation.country) {
-                case 'US':
-                case 'CA':
-                    if (value.length === 0) {
-                        e.target.value = '';
-                    } else if (value.length <= 3) {
-                        e.target.value = `+1 (${value}`;
-                    } else if (value.length <= 6) {
-                        e.target.value = `+1 (${value.slice(0,3)}) ${value.slice(3)}`;
-                    } else {
-                        e.target.value = `+1 (${value.slice(0,3)}) ${value.slice(3,6)}-${value.slice(6,10)}`;
-                    }
-                    break;
-                    
-                case 'RU':
-                    if (value.length === 0) {
-                        e.target.value = '';
-                    } else if (value.length <= 3) {
-                        e.target.value = `+7 (${value}`;
-                    } else if (value.length <= 6) {
-                        e.target.value = `+7 (${value.slice(0,3)}) ${value.slice(3)}`;
-                    } else if (value.length <= 8) {
-                        e.target.value = `+7 (${value.slice(0,3)}) ${value.slice(3,6)}-${value.slice(6)}`;
-                    } else {
-                        e.target.value = `+7 (${value.slice(0,3)}) ${value.slice(3,6)}-${value.slice(6,8)}-${value.slice(8,10)}`;
-                    }
-                    break;
-                    
-                case 'GB':
-                    if (value.length === 0) {
-                        e.target.value = '';
-                    } else {
-                        e.target.value = `+44 ${value}`;
-                    }
-                    break;
-                    
-                default:
-                    if (value.length > 0) {
-                        e.target.value = userLocation.phoneCode + ' ' + value;
-                    }
-            }
-        });
-    }
-    
-    // Найти все CTA кнопки
-    const ctaButtons = document.querySelectorAll('.cta-button, .get-started-btn, .submit-button, button[class*="viral"], button[class*="cta"]');
-    const modal = document.getElementById('paymentModal');
-    const closeBtn = document.querySelector('.close-payment-modal');
-    
-    // Открытие модального окна при клике на любую CTA кнопку
-    ctaButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            modal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-            // Небольшая задержка чтобы убедиться что модальное окно отображается
-            setTimeout(() => {
-                startCountdown();
-            }, 100);
-        });
-    });
-    
-    // Закрытие модального окна
-    if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            // Останавливаем таймер при закрытии
-            if (countdownInterval) {
-                clearInterval(countdownInterval);
-            }
-        });
-    }
-    
-    // Закрытие при клике вне окна
-    window.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            // Останавливаем таймер при закрытии
-            if (countdownInterval) {
-                clearInterval(countdownInterval);
-            }
-        }
-    });
-    
-    // Обновление цены в кнопке при выборе пакета
-    const packageRadios = document.querySelectorAll('input[name="package"]');
-    const btnPrice = document.querySelector('.btn-price');
-    
-    packageRadios.forEach(radio => {
-        radio.addEventListener('change', function() {
-            if (this.value === 'pro') {
-                btnPrice.textContent = 'for just $39';
-            } else {
-                btnPrice.textContent = 'for just $19';
-            }
-        });
-    });
-    
-    // Автоматическое форматирование имени
-    const fullNameInput = document.querySelector('input[name="fullName"]');
-    if (fullNameInput) {
-        fullNameInput.addEventListener('blur', function() {
-            this.value = this.value.split(' ').map(word => 
-                word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-            ).join(' ');
-        });
-    }
-    
-    // Обработка отправки формы
-    const paymentForm = document.getElementById('paymentForm');
-    if (paymentForm) {
-        paymentForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // Показать анимацию загрузки
-            const submitBtn = document.querySelector('.submit-payment-btn');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<span class="loading">Processing...</span>';
-            submitBtn.disabled = true;
-            
-            // Собираем данные формы
-            const formData = {
-                fullName: document.querySelector('input[name="fullName"]').value,
-                email: document.querySelector('input[name="email"]').value,
-                country: document.querySelector('input[name="country"]').value || userLocation?.country || 'Unknown',
-                phone: document.querySelector('input[name="phone"]').value || 'Not provided',
-                package: document.querySelector('input[name="package"]:checked').value,
-                price: document.querySelector('input[name="package"]:checked').value === 'pro' ? '$39' : '$19',
-                userAgent: navigator.userAgent,
-                referrer: document.referrer || 'Direct'
-            };
-            
-            console.log('Sending data:', formData);
-            
-            // Валидация email
-            if (!validateEmail(formData.email)) {
-                showErrorMessage('Please enter a valid email address');
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-                return;
-            }
-            
-            // Отправляем в Google Sheets
-            const sent = await sendToGoogleSheets(formData);
-            
-            if (sent) {
-                showSuccessMessage();
-                sessionStorage.setItem('pendingOrder', JSON.stringify(formData));
-                paymentForm.reset();
-                
-                setTimeout(() => {
-                    modal.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }, 3000);
-            } else {
-                showErrorMessage('Something went wrong. Please try again.');
-            }
-            
-            setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }, 2000);
-        });
-    }
+    // Эта функция больше не нужна, так как мы используем Lemon Squeezy
+    // Оставляем пустой для совместимости
+    return;
 }
 
 // Функция отправки данных в Google Sheets
@@ -1108,4 +921,5 @@ function showErrorMessage(message = 'Something went wrong. Please try again.') {
     }, 3000);
 }
 
+ 
  
