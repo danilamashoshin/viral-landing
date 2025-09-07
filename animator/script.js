@@ -119,6 +119,42 @@ function handleExitIntent(e) {
 }
 
 
+// Функция для открытия Lemon Squeezy в модальном окне
+function openLemonModal(url) {
+    const modal = document.getElementById('lemonModal');
+    const iframeContainer = document.getElementById('lemonIframeContainer');
+    
+    // Создаем iframe
+    const iframe = document.createElement('iframe');
+    iframe.src = url;
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.border = 'none';
+    iframe.setAttribute('allow', 'payment');
+    
+    // Очищаем контейнер и добавляем iframe
+    iframeContainer.innerHTML = '';
+    iframeContainer.appendChild(iframe);
+    
+    // Показываем модальное окно
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+// Функция для закрытия модального окна Lemon Squeezy
+function closeLemonModal() {
+    const modal = document.getElementById('lemonModal');
+    const iframeContainer = document.getElementById('lemonIframeContainer');
+    
+    modal.classList.remove('show');
+    document.body.style.overflow = 'auto';
+    
+    // Очищаем iframe через небольшую задержку
+    setTimeout(() => {
+        iframeContainer.innerHTML = '';
+    }, 300);
+}
+
 // Initialize all CTA buttons
 function initCTAButtons() {
     const ctaButtons = document.querySelectorAll('.cta-button');
@@ -140,7 +176,7 @@ function initCTAButtons() {
             
             // Проверяем, находится ли кнопка в блоке тарифов
             if (location === 'pricing-starter' || location === 'pricing-pro') {
-                // Кнопки в блоке тарифов открывают Lemon Squeezy
+                // Кнопки в блоке тарифов открывают Lemon Squeezy в модальном окне
                 let redirectUrl = '';
                 
                 if (location === 'pricing-pro') {
@@ -151,8 +187,8 @@ function initCTAButtons() {
                     redirectUrl = 'https://animator-procrastinator.lemonsqueezy.com/buy/7f00d6f8-fadd-47a0-aa1d-5fa7219519e8';
                 }
                 
-                // Открываем в новой вкладке
-                window.open(redirectUrl, '_blank');
+                // Открываем в модальном окне
+                openLemonModal(redirectUrl);
             } else {
                 // Все остальные кнопки ведут на блок тарифов
                 const pricingSection = document.getElementById('pricing');
@@ -170,6 +206,22 @@ function initCTAButtons() {
             const pricingSection = document.getElementById('pricing');
             if (pricingSection) {
                 pricingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+    
+    // Закрытие модального окна Lemon Squeezy
+    const closeLemonBtn = document.getElementById('closeLemonModal');
+    if (closeLemonBtn) {
+        closeLemonBtn.addEventListener('click', closeLemonModal);
+    }
+    
+    // Закрытие при клике вне окна
+    const lemonModal = document.getElementById('lemonModal');
+    if (lemonModal) {
+        lemonModal.addEventListener('click', (e) => {
+            if (e.target === lemonModal) {
+                closeLemonModal();
             }
         });
     }
@@ -920,6 +972,8 @@ function showErrorMessage(message = 'Something went wrong. Please try again.') {
         errorDiv.remove();
     }, 3000);
 }
+
+ 
 
  
  
