@@ -3506,4 +3506,83 @@ body {
 .loading {
     display: inline-block;
     animation: pulse 1.5s infinite;
+}
+
+/* Lemon Squeezy Modal */
+.lemon-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 10000;
+    animation: fadeIn 0.3s ease;
+}
+
+.lemon-modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lemon-modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 500px;
+    height: 90vh;
+    max-height: 700px;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    animation: slideUp 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.lemon-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.lemon-modal-close:hover {
+    background: #fff;
+    transform: rotate(90deg);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.lemon-iframe-container {
+    width: 100%;
+    height: 100%;
+}
+
+.lemon-iframe-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 } 
