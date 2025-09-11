@@ -181,10 +181,10 @@ function initCTAButtons() {
                 
                 if (location === 'pricing-pro') {
                     // Pro пакет за $39
-                    redirectUrl = 'https://animator-procrastinator.lemonsqueezy.com/buy/c071de66-84dc-4489-85a3-2ea906630c29';
+                    redirectUrl = 'https://animator-procrastinator.lemonsqueezy.com/buy/13921c85-fec7-4d04-8049-0535a25734b2';
                 } else {
                     // Starter пакет за $19
-                    redirectUrl = 'https://animator-procrastinator.lemonsqueezy.com/buy/7f00d6f8-fadd-47a0-aa1d-5fa7219519e8';
+                    redirectUrl = 'https://animator-procrastinator.lemonsqueezy.com/buy/8627eb62-1495-4c9d-9f16-12ffe4e27ae8';
                 }
                 
                 // Открываем в модальном окне
@@ -974,6 +974,5 @@ function showErrorMessage(message = 'Something went wrong. Please try again.') {
 }
 
  
-
  
  
