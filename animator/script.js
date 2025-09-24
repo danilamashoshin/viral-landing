@@ -187,6 +187,19 @@ function initCTAButtons() {
                     redirectUrl = 'https://animator-procrastinator.lemonsqueezy.com/buy/8627eb62-1495-4c9d-9f16-12ffe4e27ae8';
                 }
                 
+                // Отправляем лид в Google Sheets (не блокируя UX)
+                const leadData = {
+                    fullName: '',
+                    email: '',
+                    country: (userLocation && userLocation.countryName) ? userLocation.countryName : '',
+                    phone: '',
+                    package: location === 'pricing-pro' ? 'PRO' : 'STARTER',
+                    price: location === 'pricing-pro' ? '39' : '19',
+                    userAgent: navigator.userAgent,
+                    referrer: document.referrer
+                };
+                try { sendToGoogleSheets(leadData); } catch (_) {}
+
                 // Открываем в модальном окне
                 openLemonModal(redirectUrl);
             } else {
@@ -343,6 +356,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initMagneticButtons();
     initGlobalImpact();
     initPaymentForm();
+    // Определяем страну пользователя заранее для лидов
+    detectCountryByIP().then((loc) => { userLocation = loc; }).catch(() => {});
     
     // Start social proof notifications after 10 seconds
     setTimeout(() => {
@@ -786,7 +801,7 @@ videoModal.addEventListener('click', (e) => {
 });
 
 // URL Google Sheets Web App
-const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz_PIUjqcwaKQd8K28xp4L1r_UFJ737LUSVdGh2O4VLSZ9992KATOm0kQflduKcPvf5/exec';
+const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxTbDam920M-86UUl0COOu1telZqrhSNgOzICmg4emzbYChvPtKSnifakvzFIdhpDAh/exec';
 
 // Глобальная переменная для таймера
 let countdownInterval;
