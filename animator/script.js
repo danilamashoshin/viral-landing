@@ -801,7 +801,7 @@ videoModal.addEventListener('click', (e) => {
 });
 
 // URL Google Sheets Web App
-const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxTbDam920M-86UUl0COOu1telZqrhSNgOzICmg4emzbYChvPtKSnifakvzFIdhpDAh/exec';
+const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxUOERSedZv7qQtC7iZbadTJY16pzMZnF1HzyewaCxgbrLLlSZnz-VARRcVCoGtN5T5/exec';
 
 // Глобальная переменная для таймера
 let countdownInterval;
@@ -988,6 +988,4 @@ function showErrorMessage(message = 'Something went wrong. Please try again.') {
     }, 3000);
 }
 
- 
- 
  
