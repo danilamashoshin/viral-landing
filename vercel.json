@@ -1,10 +1,8 @@
 {
-  "functions": {
-    "api/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
-  "routes": [
-    { "src": "/(.*)", "dest": "/animator/index.html" }
+  "rewrites": [
+    { "source": "/api/health", "destination": "/api/health" },
+    { "source": "/events/lead", "destination": "/api/lead" },
+    { "source": "/webhooks/lemon", "destination": "/api/lemon" },
+    { "source": "/(.*)", "destination": "/animator/$1" }
   ]
 }
