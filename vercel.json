@@ -1,8 +1,7 @@
-   {
-     "rewrites": [
-       { "source": "/api/health", "destination": "/animator/api/health.json" },
-       { "source": "/events/lead", "destination": "/animator/api/lead.json" },
-       { "source": "/webhooks/lemon", "destination": "/animator/api/lemon.json" },
-       { "source": "/(.*)", "destination": "/animator/$1" }
-     ]
-   }
+{
+  "routes": [
+    { "src": "/api/health", "dest": "/animator/health.json" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/animator/$1" }
+  ]
+}
