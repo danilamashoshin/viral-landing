@@ -2,7 +2,7 @@
 
 A high-converting landing page for an online animation course that teaches creators how to make viral animated videos.
 
-## 🚀 Features
+## 🚀  Features 
 
 - **Responsive Design**: Mobile-first approach with breakpoints at 640px, 768px, 1024px, and 1280px
 - **Interactive Elements**:
