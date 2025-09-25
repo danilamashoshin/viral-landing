@@ -128,12 +128,6 @@ function openLemonModal(url) {
             content_category: 'Course',
             currency: 'USD'
         });
-        
-        fbq('trackCustom', 'ЗаполненнаяФорма', {
-            content_name: 'Checkout Form',
-            content_category: 'Course',
-            currency: 'USD'
-        });
     }
     
     const modal = document.getElementById('lemonModal');
@@ -1045,6 +1039,17 @@ window.addEventListener('message', function(event) {
     
     const data = event.data;
     
+    // Когда пользователь начинает заполнять форму
+    if (data.type === 'lemon-squeezy-form-interaction' || data.type === 'lemon-squeezy-form-started') {
+        if (window.fbq) {
+            fbq('trackCustom', 'ЗаполненнаяФорма', {
+                content_name: 'Checkout Form',
+                content_category: 'Course',
+                currency: 'USD'
+            });
+        }
+    }
+    
     // Когда покупка завершена
     if (data.type === 'lemon-squeezy-purchase-complete') {
         if (window.fbq) {
@@ -1060,6 +1065,35 @@ window.addEventListener('message', function(event) {
                 currency: 'USD',
                 content_name: data.product_name || 'Course'
             });
+        }
+    }
+});
+
+// Дополнительное отслеживание заполнения формы через таймер
+let formInteractionTimer = null;
+
+window.addEventListener('message', function(event) {
+    if (event.origin !== 'https://app.lemonsqueezy.com') return;
+    
+    // Если iframe загрузился, запускаем таймер для отслеживания взаимодействия
+    if (event.data.type === 'lemon-squeezy-iframe-loaded') {
+        // Через 10 секунд считаем что пользователь заполняет форму
+        formInteractionTimer = setTimeout(() => {
+            if (window.fbq) {
+                fbq('trackCustom', 'ЗаполненнаяФорма', {
+                    content_name: 'Checkout Form',
+                    content_category: 'Course',
+                    currency: 'USD'
+                });
+            }
+        }, 10000); // 10 секунд
+    }
+    
+    // Если форма закрылась до заполнения, отменяем таймер
+    if (event.data.type === 'lemon-squeezy-modal-closed') {
+        if (formInteractionTimer) {
+            clearTimeout(formInteractionTimer);
+            formInteractionTimer = null;
         }
     }
 });
