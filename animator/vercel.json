@@ -6,7 +6,6 @@
   "routes": [
     { "src": "/webhooks/lemon", "dest": "api/lemon.js" },
     { "src": "/events/lead", "dest": "api/lead.js" },
-    { "src": "/api/health", "dest": "/health.json" },
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
