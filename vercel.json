@@ -5,7 +5,7 @@
        }
      },
      "rewrites": [
-       { "source": "/api/health", "destination": "/health.json" },
+       { "source": "/api/health", "destination": "/animator/health.json" },
        { "source": "/events/lead", "destination": "/api/lead" },
        { "source": "/webhooks/lemon", "destination": "/api/lemon" },
        { "source": "/(.*)", "destination": "/animator/$1" }
