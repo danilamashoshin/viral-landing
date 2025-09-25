@@ -1,21 +1,16 @@
 import { sendToFacebookCAPI } from './_lib.js';
 
-export const config = {
-  runtime: 'edge'
-};
-
-export default async function handler(req) {
+export default async function handler(req, res) {
   if (req.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers: corsHeaders() });
+    res.status(204).end();
+    return;
   }
   if (req.method !== 'POST') {
-    return new Response('Method Not Allowed', { status: 405, headers: corsHeaders() });
+    res.status(405).end('Method Not Allowed');
+    return;
   }
 
-  const bodyText = await req.text();
-  let body = {};
-  try { body = bodyText ? JSON.parse(bodyText) : {}; } catch {}
-
+  const body = req.body || {};
   const email = body.email;
   const value = Number(body.value || 0) || undefined;
   const currency = body.currency || 'USD';
@@ -24,15 +19,8 @@ export default async function handler(req) {
   await sendToFacebookCAPI({ eventName: 'Lead', value, currency, email, productName, sourceUrl: process.env.EVENT_SOURCE_URL });
   await sendToFacebookCAPI({ eventName: 'ЗаполненнаяЗаявка', value, currency, email, productName, sourceUrl: process.env.EVENT_SOURCE_URL });
 
-  return new Response(JSON.stringify({ ok: true }), { status: 200, headers: { ...corsHeaders(), 'content-type': 'application/json' } });
+  res.status(200).json({ ok: true });
 }
 
-function corsHeaders() {
-  return {
-    'access-control-allow-origin': '*',
-    'access-control-allow-headers': 'content-type',
-    'access-control-allow-methods': 'POST,GET,OPTIONS'
-  };
-}
 
 
