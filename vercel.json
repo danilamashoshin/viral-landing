@@ -1,13 +1,8 @@
    {
-     "functions": {
-       "api/*.js": {
-         "runtime": "nodejs18.x"
-       }
-     },
      "rewrites": [
-       { "source": "/api/health", "destination": "/animator/health.json" },
-       { "source": "/events/lead", "destination": "/api/lead" },
-       { "source": "/webhooks/lemon", "destination": "/api/lemon" },
+       { "source": "/api/health", "destination": "/animator/api/health.json" },
+       { "source": "/events/lead", "destination": "/animator/api/lead.json" },
+       { "source": "/webhooks/lemon", "destination": "/animator/api/lemon.json" },
        { "source": "/(.*)", "destination": "/animator/$1" }
      ]
    }
