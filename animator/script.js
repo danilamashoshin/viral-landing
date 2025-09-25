@@ -121,6 +121,21 @@ function handleExitIntent(e) {
 
 // Функция для открытия Lemon Squeezy в модальном окне
 function openLemonModal(url) {
+    // Отслеживаем начало оформления заказа
+    if (window.fbq) {
+        fbq('track', 'InitiateCheckout', {
+            content_name: 'Course Purchase',
+            content_category: 'Course',
+            currency: 'USD'
+        });
+        
+        fbq('trackCustom', 'ЗаполненнаяФорма', {
+            content_name: 'Checkout Form',
+            content_category: 'Course',
+            currency: 'USD'
+        });
+    }
+    
     const modal = document.getElementById('lemonModal');
     const iframeContainer = document.getElementById('lemonIframeContainer');
     
@@ -1023,6 +1038,31 @@ function showSuccessMessage() {
         successDiv.remove();
     }, 3000);
 }
+
+// Отслеживание событий Lemon Squeezy
+window.addEventListener('message', function(event) {
+    if (event.origin !== 'https://app.lemonsqueezy.com') return;
+    
+    const data = event.data;
+    
+    // Когда покупка завершена
+    if (data.type === 'lemon-squeezy-purchase-complete') {
+        if (window.fbq) {
+            fbq('track', 'Purchase', {
+                value: data.amount || 19,
+                currency: 'USD',
+                content_name: data.product_name || 'Course',
+                content_category: 'Course'
+            });
+            
+            fbq('trackCustom', 'Оплата', {
+                value: data.amount || 19,
+                currency: 'USD',
+                content_name: data.product_name || 'Course'
+            });
+        }
+    }
+});
 
 // Функция показа сообщения об ошибке
 function showErrorMessage(message = 'Something went wrong. Please try again.') {
