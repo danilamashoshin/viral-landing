@@ -203,7 +203,22 @@ function initCTAButtons() {
                 // Открываем в модальном окне
                 openLemonModal(redirectUrl);
             } else {
-                // Все остальные кнопки ведут на блок тарифов
+                // Все остальные кнопки: фиксируем клик как лид и ведем на блок тарифов
+                const genericLead = {
+                    fullName: '',
+                    email: '',
+                    country: (userLocation && userLocation.countryName) ? userLocation.countryName : '',
+                    phone: '',
+                    package: 'CTA_CLICK',
+                    price: '',
+                    userAgent: navigator.userAgent,
+                    referrer: document.referrer,
+                    button_text: text,
+                    button_location: location || 'unknown'
+                };
+                try { sendToGoogleSheets(genericLead); } catch (_) {}
+
+                // Ведем пользователя к тарифам
                 const pricingSection = document.getElementById('pricing');
                 if (pricingSection) {
                     pricingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -801,7 +816,7 @@ videoModal.addEventListener('click', (e) => {
 });
 
 // URL Google Sheets Web App
-const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxUOERSedZv7qQtC7iZbadTJY16pzMZnF1HzyewaCxgbrLLlSZnz-VARRcVCoGtN5T5/exec';
+const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwJyK7JhLDqmZ2Jf31BR8B9lA88yAAFppahUIzkjJ8A1ZXQK_cfK5KoRmSo53PfpLrF/exec';
 
 // Глобальная переменная для таймера
 let countdownInterval;
