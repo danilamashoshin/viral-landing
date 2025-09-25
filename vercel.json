@@ -1,7 +1,9 @@
 {
   "routes": [
-    { "src": "/api/health", "dest": "/animator/health.json" },
+    { "src": "/webhooks/lemon", "dest": "/animator/api/lemon.js" },
+    { "src": "/events/lead", "dest": "/animator/api/lead.js" },
+    { "src": "/api/health", "dest": "/animator/api/health.js" },
     { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/animator/$1" }
+    { "src": "/(.*)", "dest": "/animator/index.html" }
   ]
 }
