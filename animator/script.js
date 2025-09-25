@@ -200,6 +200,47 @@ function initCTAButtons() {
                 };
                 try { sendToGoogleSheets(leadData); } catch (_) {}
 
+                // Кинем клиентские события Meta Pixel для лида (на всякий) 
+                try {
+                    if (typeof fbq === 'function') {
+                        fbq('track', 'Lead', {
+                            content_name: leadData.package,
+                            value: leadData.price ? Number(leadData.price) : undefined,
+                            currency: 'USD'
+                        });
+                        fbq('trackCustom', 'ЗаполненнаяЗаявка', {
+                            content_name: leadData.package,
+                            value: leadData.price ? Number(leadData.price) : undefined,
+                            currency: 'USD'
+                        });
+                    }
+                } catch (_) {}
+
+                // Отправим лид на сервер для CAPI
+                try {
+                    fetch('/events/lead', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            package: leadData.package,
+                            value: leadData.price,
+                            currency: 'USD'
+                        })
+                    }).catch(() => {});
+                } catch (_) {}
+
+                // Meta Pixel: InitiateCheckout before открываем оплату
+                try {
+                    if (typeof fbq === 'function') {
+                        fbq('track', 'InitiateCheckout', {
+                            currency: 'USD',
+                            value: location === 'pricing-pro' ? 39 : 19,
+                            content_name: location === 'pricing-pro' ? 'PRO' : 'STARTER',
+                            content_type: 'product'
+                        });
+                    }
+                } catch (_) {}
+
                 // Открываем в модальном окне
                 openLemonModal(redirectUrl);
             } else {
