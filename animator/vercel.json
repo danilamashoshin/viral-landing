@@ -1,4 +1,8 @@
 {
+  "functions": {
+    "api/*.js": { "runtime": "nodejs18.x" },
+    "api/**/*.js": { "runtime": "nodejs18.x" }
+  },
   "routes": [
     { "src": "/webhooks/lemon", "dest": "api/lemon.js" },
     { "src": "/events/lead", "dest": "api/events/lead.js" },
@@ -7,4 +11,3 @@
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
-
