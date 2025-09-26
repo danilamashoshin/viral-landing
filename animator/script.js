@@ -147,6 +147,46 @@ function openLemonModal(url) {
     // Отслеживаем загрузку iframe
     iframe.onload = function() {
         console.log('Lemon Squeezy iframe загружен');
+        
+        // Добавляем отслеживание событий формы через DOM
+        setTimeout(() => {
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                if (iframeDoc) {
+                    console.log('Доступ к iframe документу получен');
+                    
+                    // Отслеживаем фокус на полях формы
+                    iframeDoc.addEventListener('focusin', function(e) {
+                        if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') {
+                            console.log('Фокус на поле формы:', e.target.name || e.target.type);
+                            if (window.fbq) {
+                                fbq('trackCustom', 'ЗаполненнаяФорма', {
+                                    content_name: 'Checkout Form',
+                                    content_category: 'Course',
+                                    currency: 'USD'
+                                });
+                            }
+                        }
+                    });
+                    
+                    // Отслеживаем ввод в поля
+                    iframeDoc.addEventListener('input', function(e) {
+                        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                            console.log('Ввод в поле формы:', e.target.name || e.target.type);
+                            if (window.fbq) {
+                                fbq('trackCustom', 'ЗаполненнаяФорма', {
+                                    content_name: 'Checkout Form',
+                                    content_category: 'Course',
+                                    currency: 'USD'
+                                });
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.log('Не удалось получить доступ к iframe документу:', error);
+            }
+        }, 2000); // Ждем 2 секунды для полной загрузки
     };
     
     // Очищаем контейнер и добавляем iframe
@@ -1154,6 +1194,5 @@ function showErrorMessage(message = 'Something went wrong. Please try again.') {
     }, 3000);
 }
 
- 
  
  
