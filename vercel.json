@@ -1,9 +1,11 @@
 {
   "routes": [
-    { "src": "/webhooks/lemon", "dest": "/api/lemon" },
-    { "src": "/events/lead", "dest": "/api/lead" },
-    { "src": "/api/health", "dest": "/api/health" },
+    { "src": "/webhooks/lemon", "dest": "/api/lemon.js" },
+    { "src": "/events/lead", "dest": "/api/lead.js" },
+    { "src": "/api/health", "dest": "/api/health.js" },
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
+
+
