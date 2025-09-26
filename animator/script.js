@@ -8,6 +8,11 @@ const closePopup = document.getElementById('close-popup');
 const socialProof = document.getElementById('social-proof');
 const timer = document.getElementById('timer');
 
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Страница загружена, Facebook Pixel готов к работе');
+});
+
 // Social Proof Names
 const notifications = [
     "Emma from Los Angeles",
@@ -148,45 +153,17 @@ function openLemonModal(url) {
     iframe.onload = function() {
         console.log('Lemon Squeezy iframe загружен');
         
-        // Добавляем отслеживание событий формы через DOM
+        // Отправляем событие ЗаполненнаяФорма через 15 секунд после открытия модалки
         setTimeout(() => {
-            try {
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                if (iframeDoc) {
-                    console.log('Доступ к iframe документу получен');
-                    
-                    // Отслеживаем фокус на полях формы
-                    iframeDoc.addEventListener('focusin', function(e) {
-                        if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') {
-                            console.log('Фокус на поле формы:', e.target.name || e.target.type);
-                            if (window.fbq) {
-                                fbq('trackCustom', 'ЗаполненнаяФорма', {
-                                    content_name: 'Checkout Form',
-                                    content_category: 'Course',
-                                    currency: 'USD'
-                                });
-                            }
-                        }
-                    });
-                    
-                    // Отслеживаем ввод в поля
-                    iframeDoc.addEventListener('input', function(e) {
-                        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-                            console.log('Ввод в поле формы:', e.target.name || e.target.type);
-                            if (window.fbq) {
-                                fbq('trackCustom', 'ЗаполненнаяФорма', {
-                                    content_name: 'Checkout Form',
-                                    content_category: 'Course',
-                                    currency: 'USD'
-                                });
-                            }
-                        }
-                    });
-                }
-            } catch (error) {
-                console.log('Не удалось получить доступ к iframe документу:', error);
+            if (window.fbq) {
+                console.log('Отправляем событие ЗаполненнаяФорма через 15 секунд');
+                fbq('trackCustom', 'ЗаполненнаяФорма', {
+                    content_name: 'Checkout Form',
+                    content_category: 'Course',
+                    currency: 'USD'
+                });
             }
-        }, 2000); // Ждем 2 секунды для полной загрузки
+        }, 15000); // 15 секунд
     };
     
     // Очищаем контейнер и добавляем iframe
@@ -1081,6 +1058,7 @@ function showSuccessMessage() {
     }, 3000);
 }
 
+
 // Отслеживание событий Lemon Squeezy
 window.addEventListener('message', function(event) {
     // Логируем ВСЕ события для отладки
@@ -1115,29 +1093,24 @@ window.addEventListener('message', function(event) {
         }
     }
     
-    // Когда пользователь реально заполняет форму (вводит данные)
-    // Проверяем различные возможные типы событий
+    // Проверяем тип события в извлеченных данных
+    const eventType = eventData.type || eventData.name;
+    
+    // Когда пользователь реально заполняет форму (только реальные события)
     const formEvents = [
-        'lemon-squeezy-form-field-focus',
-        'lemon-squeezy-form-field-change', 
-        'lemon-squeezy-form-field-input',
-        'lemon-squeezy-form-submit',
         'form-field-focus',
         'form-field-change',
         'form-field-input',
         'form-submit',
         'field-focus',
-        'field-change',
+        'field-change', 
         'field-input',
-        'submit'
+        'checkout-form-interaction',
+        'payment-form-interaction'
     ];
     
-    // Проверяем тип события в извлеченных данных
-    const eventType = eventData.type || eventData.name;
-    
     if (formEvents.includes(eventType) || 
-        (eventType && eventType.includes('form')) ||
-        (eventType && eventType.includes('field'))) {
+        (eventType && eventType.includes('form') && eventType.includes('field'))) {
         if (window.fbq) {
             console.log('Отправляем событие ЗаполненнаяФорма, тип события:', eventType);
             fbq('trackCustom', 'ЗаполненнаяФорма', {
@@ -1148,13 +1121,11 @@ window.addEventListener('message', function(event) {
         }
     }
     
-    // Когда покупка завершена
-    if (eventType === 'lemon-squeezy-purchase-complete' || 
-        eventType === 'lemon-squeezy-order-complete' ||
-        eventType === 'lemon-squeezy-payment-success' ||
-        eventType === 'purchase-complete' ||
+    // Когда покупка завершена через postMessage
+    if (eventType === 'purchase-complete' || 
         eventType === 'order-complete' ||
-        eventType === 'payment-success') {
+        eventType === 'payment-success' ||
+        eventType === 'checkout-complete') {
         if (window.fbq) {
             console.log('Отправляем события Purchase и Оплата, тип события:', eventType);
             fbq('track', 'Purchase', {
@@ -1194,5 +1165,6 @@ function showErrorMessage(message = 'Something went wrong. Please try again.') {
     }, 3000);
 }
 
+ 
  
  
