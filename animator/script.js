@@ -158,27 +158,40 @@ function openLemonModal(url) {
     modal.classList.add('show');
     document.body.style.overflow = 'hidden';
     
-    // Запускаем таймер сразу при открытии модалки
+    // Запускаем таймер на 15 секунд для события "Заполненная форма"
+    // Это событие должно срабатывать когда пользователь находится в форме 15 секунд
     console.log('=== ЗАПУСКАЕМ ТАЙМЕР НА 15 СЕКУНД ===');
     console.log('Модалка открыта, запускаем таймер на 15 секунд для события ЗаполненнаяФорма');
-    setTimeout(() => {
-        console.log('=== ТАЙМЕР СРАБОТАЛ! ===');
-        console.log('Таймер сработал! Проверяем fbq...');
-        if (window.fbq) {
-            console.log('=== ОТПРАВЛЯЕМ СОБЫТИЕ ===');
-            console.log('Отправляем событие ЗаполненнаяФорма через 15 секунд');
-            fbq('trackCustom', 'ЗаполненнаяФорма', {
-                content_name: 'Checkout Form',
-                content_category: 'Course',
-                currency: 'USD'
-            });
-            console.log('=== СОБЫТИЕ ОТПРАВЛЕНО! ===');
-            console.log('Событие ЗаполненнаяФорма отправлено!');
-        } else {
-            console.log('=== ОШИБКА: window.fbq не найден! ===');
-            console.log('ОШИБКА: window.fbq не найден!');
+    
+    let formTimerStarted = false;
+    const formTimer = setTimeout(() => {
+        if (!formTimerStarted) {
+            formTimerStarted = true;
+            console.log('=== ТАЙМЕР СРАБОТАЛ! ===');
+            console.log('Таймер сработал! Проверяем fbq...');
+            if (window.fbq) {
+                console.log('=== ОТПРАВЛЯЕМ СОБЫТИЕ ===');
+                console.log('Отправляем событие ЗаполненнаяФорма через 15 секунд');
+                fbq('trackCustom', 'ЗаполненнаяФорма', {
+                    content_name: 'Checkout Form',
+                    content_category: 'Course',
+                    currency: 'USD'
+                });
+                console.log('=== СОБЫТИЕ ОТПРАВЛЕНО! ===');
+                console.log('Событие ЗаполненнаяФорма отправлено!');
+            } else {
+                console.log('=== ОШИБКА: window.fbq не найден! ===');
+                console.log('ОШИБКА: window.fbq не найден!');
+            }
         }
     }, 15000); // 15 секунд
+    
+    // Очищаем таймер при закрытии модалки
+    const originalCloseLemonModal = window.closeLemonModal;
+    window.closeLemonModal = function() {
+        clearTimeout(formTimer);
+        originalCloseLemonModal();
+    };
 }
 
 // Функция для закрытия модального окна Lemon Squeezy
@@ -1068,7 +1081,9 @@ function showSuccessMessage() {
 // Отслеживание событий Lemon Squeezy
 window.addEventListener('message', function(event) {
     // Логируем ВСЕ события для отладки
-    console.log('Получено событие от:', event.origin, 'Данные:', event.data);
+    console.log('=== POSTMESSAGE EVENT ===');
+    console.log('Origin:', event.origin);
+    console.log('Data:', event.data);
     
     // Проверяем все возможные origins от Lemon Squeezy
     const lemonOrigins = [
@@ -1100,7 +1115,9 @@ window.addEventListener('message', function(event) {
     }
     
     // Проверяем тип события в извлеченных данных
-    const eventType = eventData.type || eventData.name;
+    const eventType = eventData.type || eventData.name || eventData.event;
+    
+    console.log('Event type:', eventType);
     
     // Когда пользователь реально заполняет форму (только реальные события)
     const formEvents = [
@@ -1112,40 +1129,64 @@ window.addEventListener('message', function(event) {
         'field-change', 
         'field-input',
         'checkout-form-interaction',
-        'payment-form-interaction'
+        'payment-form-interaction',
+        'checkout:form:field:focus',
+        'checkout:form:field:change',
+        'checkout:form:field:input'
     ];
     
     if (formEvents.includes(eventType) || 
         (eventType && eventType.includes('form') && eventType.includes('field'))) {
         if (window.fbq) {
-            console.log('Отправляем событие ЗаполненнаяФорма, тип события:', eventType);
+            console.log('=== ОТПРАВЛЯЕМ СОБЫТИЕ ЗАПОЛНЕННАЯФОРМА ===');
+            console.log('Тип события:', eventType);
             fbq('trackCustom', 'ЗаполненнаяФорма', {
                 content_name: 'Checkout Form',
                 content_category: 'Course',
                 currency: 'USD'
             });
+            console.log('Событие ЗаполненнаяФорма отправлено!');
+        } else {
+            console.log('fbq не найден для отправки события ЗаполненнаяФорма');
         }
     }
     
     // Когда покупка завершена через postMessage
-    if (eventType === 'purchase-complete' || 
-        eventType === 'order-complete' ||
-        eventType === 'payment-success' ||
-        eventType === 'checkout-complete') {
+    const paymentEvents = [
+        'purchase-complete',
+        'order-complete',
+        'payment-success',
+        'checkout-complete',
+        'checkout:order:created',
+        'checkout:payment:success',
+        'order_created',
+        'order:created'
+    ];
+    
+    if (paymentEvents.includes(eventType)) {
         if (window.fbq) {
-            console.log('Отправляем события Purchase и Оплата, тип события:', eventType);
+            console.log('=== ОТПРАВЛЯЕМ СОБЫТИЯ PURCHASE И ОПЛАТА ===');
+            console.log('Тип события:', eventType);
+            
+            const amount = eventData.amount || eventData.total || 19;
+            const productName = eventData.product_name || eventData.productName || 'Course';
+            
             fbq('track', 'Purchase', {
-                value: eventData.amount || 19,
+                value: amount,
                 currency: 'USD',
-                content_name: eventData.product_name || 'Course',
+                content_name: productName,
                 content_category: 'Course'
             });
             
             fbq('trackCustom', 'Оплата', {
-                value: eventData.amount || 19,
+                value: amount,
                 currency: 'USD',
-                content_name: eventData.product_name || 'Course'
+                content_name: productName
             });
+            
+            console.log('События Purchase и Оплата отправлены!');
+        } else {
+            console.log('fbq не найден для отправки событий Purchase и Оплата');
         }
     }
 });
@@ -1170,5 +1211,7 @@ function showErrorMessage(message = 'Something went wrong. Please try again.') {
         errorDiv.remove();
     }, 3000);
 }
+
+ 
 
  
