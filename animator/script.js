@@ -154,7 +154,9 @@ function openLemonModal(url) {
         console.log('Lemon Squeezy iframe загружен');
         
         // Отправляем событие ЗаполненнаяФорма через 15 секунд после открытия модалки
+        console.log('Запускаем таймер на 15 секунд для события ЗаполненнаяФорма');
         setTimeout(() => {
+            console.log('Таймер сработал! Проверяем fbq...');
             if (window.fbq) {
                 console.log('Отправляем событие ЗаполненнаяФорма через 15 секунд');
                 fbq('trackCustom', 'ЗаполненнаяФорма', {
@@ -162,9 +164,17 @@ function openLemonModal(url) {
                     content_category: 'Course',
                     currency: 'USD'
                 });
+                console.log('Событие ЗаполненнаяФорма отправлено!');
+            } else {
+                console.log('ОШИБКА: window.fbq не найден!');
             }
         }, 15000); // 15 секунд
     };
+    
+    // Дополнительная проверка через 1 секунду
+    setTimeout(() => {
+        console.log('Проверка через 1 секунду: iframe загружен?', iframe.complete);
+    }, 1000);
     
     // Очищаем контейнер и добавляем iframe
     iframeContainer.innerHTML = '';
@@ -1165,7 +1175,6 @@ function showErrorMessage(message = 'Something went wrong. Please try again.') {
     }, 3000);
 }
 
- 
  
  
  
