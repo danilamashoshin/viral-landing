@@ -1051,7 +1051,8 @@ window.addEventListener('message', function(event) {
         'https://app.lemonsqueezy.com',
         'https://lemonsqueezy.com',
         'https://checkout.lemonsqueezy.com',
-        'https://api.lemonsqueezy.com'
+        'https://api.lemonsqueezy.com',
+        'https://animator-procrastinator.lemonsqueezy.com'
     ];
     
     if (!lemonOrigins.includes(event.origin)) {
@@ -1063,6 +1064,16 @@ window.addEventListener('message', function(event) {
     
     // Логируем все события от Lemon Squeezy для отладки
     console.log('Lemon Squeezy event:', data);
+    
+    // Проверяем структуру данных - может быть вложенной
+    let eventData = data;
+    if (data && typeof data === 'object' && Object.keys(data).length > 0) {
+        const firstKey = Object.keys(data)[0];
+        if (Array.isArray(data[firstKey]) && data[firstKey].length > 0) {
+            eventData = data[firstKey][0];
+            console.log('Извлеченные данные события:', eventData);
+        }
+    }
     
     // Когда пользователь реально заполняет форму (вводит данные)
     // Проверяем различные возможные типы событий
@@ -1081,11 +1092,14 @@ window.addEventListener('message', function(event) {
         'submit'
     ];
     
-    if (formEvents.includes(data.type) || 
-        (data.type && data.type.includes('form')) ||
-        (data.type && data.type.includes('field'))) {
+    // Проверяем тип события в извлеченных данных
+    const eventType = eventData.type || eventData.name;
+    
+    if (formEvents.includes(eventType) || 
+        (eventType && eventType.includes('form')) ||
+        (eventType && eventType.includes('field'))) {
         if (window.fbq) {
-            console.log('Отправляем событие ЗаполненнаяФорма, тип события:', data.type);
+            console.log('Отправляем событие ЗаполненнаяФорма, тип события:', eventType);
             fbq('trackCustom', 'ЗаполненнаяФорма', {
                 content_name: 'Checkout Form',
                 content_category: 'Course',
@@ -1095,22 +1109,25 @@ window.addEventListener('message', function(event) {
     }
     
     // Когда покупка завершена
-    if (data.type === 'lemon-squeezy-purchase-complete' || 
-        data.type === 'lemon-squeezy-order-complete' ||
-        data.type === 'lemon-squeezy-payment-success') {
+    if (eventType === 'lemon-squeezy-purchase-complete' || 
+        eventType === 'lemon-squeezy-order-complete' ||
+        eventType === 'lemon-squeezy-payment-success' ||
+        eventType === 'purchase-complete' ||
+        eventType === 'order-complete' ||
+        eventType === 'payment-success') {
         if (window.fbq) {
-            console.log('Отправляем события Purchase и Оплата');
+            console.log('Отправляем события Purchase и Оплата, тип события:', eventType);
             fbq('track', 'Purchase', {
-                value: data.amount || 19,
+                value: eventData.amount || 19,
                 currency: 'USD',
-                content_name: data.product_name || 'Course',
+                content_name: eventData.product_name || 'Course',
                 content_category: 'Course'
             });
             
             fbq('trackCustom', 'Оплата', {
-                value: data.amount || 19,
+                value: eventData.amount || 19,
                 currency: 'USD',
-                content_name: data.product_name || 'Course'
+                content_name: eventData.product_name || 'Course'
             });
         }
     }
