@@ -1039,8 +1039,10 @@ window.addEventListener('message', function(event) {
     
     const data = event.data;
     
-    // Когда пользователь начинает заполнять форму
-    if (data.type === 'lemon-squeezy-form-interaction' || data.type === 'lemon-squeezy-form-started') {
+    // Когда пользователь реально заполняет форму (вводит данные)
+    if (data.type === 'lemon-squeezy-form-field-focus' || 
+        data.type === 'lemon-squeezy-form-field-change' ||
+        data.type === 'lemon-squeezy-form-field-input') {
         if (window.fbq) {
             fbq('trackCustom', 'ЗаполненнаяФорма', {
                 content_name: 'Checkout Form',
