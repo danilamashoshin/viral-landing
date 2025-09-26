@@ -13,12 +13,26 @@ export function normalizePhoneE164(phone) {
 }
 
 export function lemonVerify(rawBody, signature, secret) {
-  if (!secret || !signature) return true;
+  if (!secret || !signature) {
+    console.log('Missing secret or signature:', { hasSecret: !!secret, hasSignature: !!signature });
+    return true; // Allow if no signature verification is configured
+  }
+  
+  console.log('Verifying signature with secret:', secret);
+  console.log('Raw body for verification:', rawBody);
+  console.log('Received signature:', signature);
+  
   const hmac = crypto.createHmac('sha256', secret);
   const digest = hmac.update(rawBody || '').digest('hex');
+  
+  console.log('Calculated digest:', digest);
+  
   try {
-    return crypto.timingSafeEqual(Buffer.from(digest), Buffer.from(signature));
-  } catch {
+    const isValid = crypto.timingSafeEqual(Buffer.from(digest), Buffer.from(signature));
+    console.log('Signature verification result:', isValid);
+    return isValid;
+  } catch (error) {
+    console.error('Error in signature verification:', error);
     return false;
   }
 }
@@ -56,6 +70,7 @@ export async function sendToFacebookCAPI({ eventName, value, currency, email, pr
   const json = await resp.json().catch(() => ({}));
   return resp.ok ? { ok: true, json } : { ok: false, status: resp.status, json };
 }
+
 
 
 
