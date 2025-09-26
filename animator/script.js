@@ -1046,7 +1046,18 @@ window.addEventListener('message', function(event) {
     // Логируем ВСЕ события для отладки
     console.log('Получено событие от:', event.origin, 'Данные:', event.data);
     
-    if (event.origin !== 'https://app.lemonsqueezy.com') return;
+    // Проверяем все возможные origins от Lemon Squeezy
+    const lemonOrigins = [
+        'https://app.lemonsqueezy.com',
+        'https://lemonsqueezy.com',
+        'https://checkout.lemonsqueezy.com',
+        'https://api.lemonsqueezy.com'
+    ];
+    
+    if (!lemonOrigins.includes(event.origin)) {
+        console.log('Событие не от Lemon Squeezy, игнорируем');
+        return;
+    }
     
     const data = event.data;
     
@@ -1054,12 +1065,27 @@ window.addEventListener('message', function(event) {
     console.log('Lemon Squeezy event:', data);
     
     // Когда пользователь реально заполняет форму (вводит данные)
-    if (data.type === 'lemon-squeezy-form-field-focus' || 
-        data.type === 'lemon-squeezy-form-field-change' ||
-        data.type === 'lemon-squeezy-form-field-input' ||
-        data.type === 'lemon-squeezy-form-submit') {
+    // Проверяем различные возможные типы событий
+    const formEvents = [
+        'lemon-squeezy-form-field-focus',
+        'lemon-squeezy-form-field-change', 
+        'lemon-squeezy-form-field-input',
+        'lemon-squeezy-form-submit',
+        'form-field-focus',
+        'form-field-change',
+        'form-field-input',
+        'form-submit',
+        'field-focus',
+        'field-change',
+        'field-input',
+        'submit'
+    ];
+    
+    if (formEvents.includes(data.type) || 
+        (data.type && data.type.includes('form')) ||
+        (data.type && data.type.includes('field'))) {
         if (window.fbq) {
-            console.log('Отправляем событие ЗаполненнаяФорма');
+            console.log('Отправляем событие ЗаполненнаяФорма, тип события:', data.type);
             fbq('trackCustom', 'ЗаполненнаяФорма', {
                 content_name: 'Checkout Form',
                 content_category: 'Course',
@@ -1111,5 +1137,6 @@ function showErrorMessage(message = 'Something went wrong. Please try again.') {
     }, 3000);
 }
 
+ 
  
  
