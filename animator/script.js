@@ -121,8 +121,11 @@ function handleExitIntent(e) {
 
 // Функция для открытия Lemon Squeezy в модальном окне
 function openLemonModal(url) {
+    console.log('Открываем Lemon Squeezy модалку:', url);
+    
     // Отслеживаем начало оформления заказа
     if (window.fbq) {
+        console.log('Отправляем InitiateCheckout');
         fbq('track', 'InitiateCheckout', {
             content_name: 'Course Purchase',
             content_category: 'Course',
@@ -140,6 +143,11 @@ function openLemonModal(url) {
     iframe.style.height = '100%';
     iframe.style.border = 'none';
     iframe.setAttribute('allow', 'payment');
+    
+    // Отслеживаем загрузку iframe
+    iframe.onload = function() {
+        console.log('Lemon Squeezy iframe загружен');
+    };
     
     // Очищаем контейнер и добавляем iframe
     iframeContainer.innerHTML = '';
@@ -1035,6 +1043,9 @@ function showSuccessMessage() {
 
 // Отслеживание событий Lemon Squeezy
 window.addEventListener('message', function(event) {
+    // Логируем ВСЕ события для отладки
+    console.log('Получено событие от:', event.origin, 'Данные:', event.data);
+    
     if (event.origin !== 'https://app.lemonsqueezy.com') return;
     
     const data = event.data;
@@ -1100,4 +1111,5 @@ function showErrorMessage(message = 'Something went wrong. Please try again.') {
     }, 3000);
 }
 
+ 
  
