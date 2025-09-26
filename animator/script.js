@@ -126,7 +126,8 @@ function handleExitIntent(e) {
 
 // Функция для открытия Lemon Squeezy в модальном окне
 function openLemonModal(url) {
-    console.log('Открываем Lemon Squeezy модалку:', url);
+    console.log('=== ОТКРЫВАЕМ LEMON SQUEEZY МОДАЛКУ ===');
+    console.log('URL:', url);
     
     // Отслеживаем начало оформления заказа
     if (window.fbq) {
@@ -185,18 +186,23 @@ function openLemonModal(url) {
     document.body.style.overflow = 'hidden';
     
     // Запускаем таймер сразу при открытии модалки (независимо от iframe)
+    console.log('=== ЗАПУСКАЕМ ТАЙМЕР НА 15 СЕКУНД ===');
     console.log('Модалка открыта, запускаем таймер на 15 секунд для события ЗаполненнаяФорма');
     setTimeout(() => {
+        console.log('=== ТАЙМЕР СРАБОТАЛ! ===');
         console.log('Таймер сработал! Проверяем fbq...');
         if (window.fbq) {
+            console.log('=== ОТПРАВЛЯЕМ СОБЫТИЕ ===');
             console.log('Отправляем событие ЗаполненнаяФорма через 15 секунд');
             fbq('trackCustom', 'ЗаполненнаяФорма', {
                 content_name: 'Checkout Form',
                 content_category: 'Course',
                 currency: 'USD'
             });
+            console.log('=== СОБЫТИЕ ОТПРАВЛЕНО! ===');
             console.log('Событие ЗаполненнаяФорма отправлено!');
         } else {
+            console.log('=== ОШИБКА: window.fbq не найден! ===');
             console.log('ОШИБКА: window.fbq не найден!');
         }
     }, 15000); // 15 секунд
@@ -1192,4 +1198,5 @@ function showErrorMessage(message = 'Something went wrong. Please try again.') {
     }, 3000);
 }
 
+ 
  
