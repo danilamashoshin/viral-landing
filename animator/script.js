@@ -1039,11 +1039,16 @@ window.addEventListener('message', function(event) {
     
     const data = event.data;
     
+    // Логируем все события от Lemon Squeezy для отладки
+    console.log('Lemon Squeezy event:', data);
+    
     // Когда пользователь реально заполняет форму (вводит данные)
     if (data.type === 'lemon-squeezy-form-field-focus' || 
         data.type === 'lemon-squeezy-form-field-change' ||
-        data.type === 'lemon-squeezy-form-field-input') {
+        data.type === 'lemon-squeezy-form-field-input' ||
+        data.type === 'lemon-squeezy-form-submit') {
         if (window.fbq) {
+            console.log('Отправляем событие ЗаполненнаяФорма');
             fbq('trackCustom', 'ЗаполненнаяФорма', {
                 content_name: 'Checkout Form',
                 content_category: 'Course',
@@ -1053,8 +1058,11 @@ window.addEventListener('message', function(event) {
     }
     
     // Когда покупка завершена
-    if (data.type === 'lemon-squeezy-purchase-complete') {
+    if (data.type === 'lemon-squeezy-purchase-complete' || 
+        data.type === 'lemon-squeezy-order-complete' ||
+        data.type === 'lemon-squeezy-payment-success') {
         if (window.fbq) {
+            console.log('Отправляем события Purchase и Оплата');
             fbq('track', 'Purchase', {
                 value: data.amount || 19,
                 currency: 'USD',
