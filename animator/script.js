@@ -8,11 +8,6 @@ const closePopup = document.getElementById('close-popup');
 const socialProof = document.getElementById('social-proof');
 const timer = document.getElementById('timer');
 
-// Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Страница загружена, Facebook Pixel готов к работе');
-});
-
 // Social Proof Names
 const notifications = [
     "Emma from Los Angeles",
@@ -126,12 +121,8 @@ function handleExitIntent(e) {
 
 // Функция для открытия Lemon Squeezy в модальном окне
 function openLemonModal(url) {
-    console.log('=== ОТКРЫВАЕМ LEMON SQUEEZY МОДАЛКУ ===');
-    console.log('URL:', url);
-    
     // Отслеживаем начало оформления заказа
     if (window.fbq) {
-        console.log('Отправляем InitiateCheckout');
         fbq('track', 'InitiateCheckout', {
             content_name: 'Course Purchase',
             content_category: 'Course',
@@ -157,41 +148,6 @@ function openLemonModal(url) {
     // Показываем модальное окно
     modal.classList.add('show');
     document.body.style.overflow = 'hidden';
-    
-    // Запускаем таймер на 15 секунд для события "Заполненная форма"
-    // Это событие должно срабатывать когда пользователь находится в форме 15 секунд
-    console.log('=== ЗАПУСКАЕМ ТАЙМЕР НА 15 СЕКУНД ===');
-    console.log('Модалка открыта, запускаем таймер на 15 секунд для события ЗаполненнаяФорма');
-    
-    let formTimerStarted = false;
-    const formTimer = setTimeout(() => {
-        if (!formTimerStarted) {
-            formTimerStarted = true;
-            console.log('=== ТАЙМЕР СРАБОТАЛ! ===');
-            console.log('Таймер сработал! Проверяем fbq...');
-            if (window.fbq) {
-                console.log('=== ОТПРАВЛЯЕМ СОБЫТИЕ ===');
-                console.log('Отправляем событие ЗаполненнаяФорма через 15 секунд');
-                fbq('trackCustom', 'ЗаполненнаяФорма', {
-                    content_name: 'Checkout Form',
-                    content_category: 'Course',
-                    currency: 'USD'
-                });
-                console.log('=== СОБЫТИЕ ОТПРАВЛЕНО! ===');
-                console.log('Событие ЗаполненнаяФорма отправлено!');
-            } else {
-                console.log('=== ОШИБКА: window.fbq не найден! ===');
-                console.log('ОШИБКА: window.fbq не найден!');
-            }
-        }
-    }, 15000); // 15 секунд
-    
-    // Очищаем таймер при закрытии модалки
-    const originalCloseLemonModal = window.closeLemonModal;
-    window.closeLemonModal = function() {
-        clearTimeout(formTimer);
-        originalCloseLemonModal();
-    };
 }
 
 // Функция для закрытия модального окна Lemon Squeezy
@@ -1077,120 +1033,70 @@ function showSuccessMessage() {
     }, 3000);
 }
 
-
 // Отслеживание событий Lemon Squeezy
 window.addEventListener('message', function(event) {
-    // Логируем ВСЕ события для отладки
-    console.log('=== POSTMESSAGE EVENT ===');
-    console.log('Origin:', event.origin);
-    console.log('Data:', event.data);
-    
-    // Проверяем все возможные origins от Lemon Squeezy
-    const lemonOrigins = [
-        'https://app.lemonsqueezy.com',
-        'https://lemonsqueezy.com',
-        'https://checkout.lemonsqueezy.com',
-        'https://api.lemonsqueezy.com',
-        'https://animator-procrastinator.lemonsqueezy.com'
-    ];
-    
-    if (!lemonOrigins.includes(event.origin)) {
-        console.log('Событие не от Lemon Squeezy, игнорируем');
-        return;
-    }
+    if (event.origin !== 'https://app.lemonsqueezy.com') return;
     
     const data = event.data;
     
-    // Логируем все события от Lemon Squeezy для отладки
-    console.log('Lemon Squeezy event:', data);
-    
-    // Проверяем структуру данных - может быть вложенной
-    let eventData = data;
-    if (data && typeof data === 'object' && Object.keys(data).length > 0) {
-        const firstKey = Object.keys(data)[0];
-        if (Array.isArray(data[firstKey]) && data[firstKey].length > 0) {
-            eventData = data[firstKey][0];
-            console.log('Извлеченные данные события:', eventData);
-        }
-    }
-    
-    // Проверяем тип события в извлеченных данных
-    const eventType = eventData.type || eventData.name || eventData.event;
-    
-    console.log('Event type:', eventType);
-    
-    // Когда пользователь реально заполняет форму (только реальные события)
-    const formEvents = [
-        'form-field-focus',
-        'form-field-change',
-        'form-field-input',
-        'form-submit',
-        'field-focus',
-        'field-change', 
-        'field-input',
-        'checkout-form-interaction',
-        'payment-form-interaction',
-        'checkout:form:field:focus',
-        'checkout:form:field:change',
-        'checkout:form:field:input'
-    ];
-    
-    if (formEvents.includes(eventType) || 
-        (eventType && eventType.includes('form') && eventType.includes('field'))) {
+    // Когда пользователь начинает заполнять форму
+    if (data.type === 'lemon-squeezy-form-interaction' || data.type === 'lemon-squeezy-form-started') {
         if (window.fbq) {
-            console.log('=== ОТПРАВЛЯЕМ СОБЫТИЕ ЗАПОЛНЕННАЯФОРМА ===');
-            console.log('Тип события:', eventType);
             fbq('trackCustom', 'ЗаполненнаяФорма', {
                 content_name: 'Checkout Form',
                 content_category: 'Course',
                 currency: 'USD'
             });
-            console.log('Событие ЗаполненнаяФорма отправлено!');
-        } else {
-            console.log('fbq не найден для отправки события ЗаполненнаяФорма');
         }
     }
     
-    // Когда покупка завершена через postMessage
-    const paymentEvents = [
-        'purchase-complete',
-        'order-complete',
-        'payment-success',
-        'checkout-complete',
-        'checkout:order:created',
-        'checkout:payment:success',
-        'order_created',
-        'order:created'
-    ];
-    
-    if (paymentEvents.includes(eventType)) {
+    // Когда покупка завершена
+    if (data.type === 'lemon-squeezy-purchase-complete') {
         if (window.fbq) {
-            console.log('=== ОТПРАВЛЯЕМ СОБЫТИЯ PURCHASE И ОПЛАТА ===');
-            console.log('Тип события:', eventType);
-            
-            const amount = eventData.amount || eventData.total || 19;
-            const productName = eventData.product_name || eventData.productName || 'Course';
-            
             fbq('track', 'Purchase', {
-                value: amount,
+                value: data.amount || 19,
                 currency: 'USD',
-                content_name: productName,
+                content_name: data.product_name || 'Course',
                 content_category: 'Course'
             });
             
             fbq('trackCustom', 'Оплата', {
-                value: amount,
+                value: data.amount || 19,
                 currency: 'USD',
-                content_name: productName
+                content_name: data.product_name || 'Course'
             });
-            
-            console.log('События Purchase и Оплата отправлены!');
-        } else {
-            console.log('fbq не найден для отправки событий Purchase и Оплата');
         }
     }
 });
 
+// Дополнительное отслеживание заполнения формы через таймер
+let formInteractionTimer = null;
+
+window.addEventListener('message', function(event) {
+    if (event.origin !== 'https://app.lemonsqueezy.com') return;
+    
+    // Если iframe загрузился, запускаем таймер для отслеживания взаимодействия
+    if (event.data.type === 'lemon-squeezy-iframe-loaded') {
+        // Через 10 секунд считаем что пользователь заполняет форму
+        formInteractionTimer = setTimeout(() => {
+            if (window.fbq) {
+                fbq('trackCustom', 'ЗаполненнаяФорма', {
+                    content_name: 'Checkout Form',
+                    content_category: 'Course',
+                    currency: 'USD'
+                });
+            }
+        }, 10000); // 10 секунд
+    }
+    
+    // Если форма закрылась до заполнения, отменяем таймер
+    if (event.data.type === 'lemon-squeezy-modal-closed') {
+        if (formInteractionTimer) {
+            clearTimeout(formInteractionTimer);
+            formInteractionTimer = null;
+        }
+    }
+});
 
 // Функция показа сообщения об ошибке
 function showErrorMessage(message = 'Something went wrong. Please try again.') {
@@ -1211,6 +1117,8 @@ function showErrorMessage(message = 'Something went wrong. Please try again.') {
         errorDiv.remove();
     }, 3000);
 }
+
+ 
 
  
 
