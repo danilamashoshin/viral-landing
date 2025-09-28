@@ -1,6 +1,6 @@
-import { sendToFacebookCAPI } from './_lib.js';
+const { sendToFacebookCAPI } = require('./_lib.js');
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   if (req.method === 'OPTIONS') {
     res.status(204).end();
     return;
@@ -22,6 +22,5 @@ export default async function handler(req, res) {
   res.status(200).json({ ok: true });
 }
 
-
-
+module.exports = handler;
 
