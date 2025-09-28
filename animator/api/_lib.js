@@ -1,43 +1,29 @@
-import crypto from 'crypto';
+const crypto = require('crypto');
 
-export function sha256LowerTrim(input) {
+function sha256LowerTrim(input) {
   if (!input || typeof input !== 'string') return undefined;
   const normalized = input.trim().toLowerCase();
   return crypto.createHash('sha256').update(normalized).digest('hex');
 }
 
-export function normalizePhoneE164(phone) {
+function normalizePhoneE164(phone) {
   if (!phone) return undefined;
   const digits = String(phone).replace(/[^0-9+]/g, '');
   return digits.startsWith('+') ? digits : undefined;
 }
 
-export function lemonVerify(rawBody, signature, secret) {
-  if (!secret || !signature) {
-    console.log('Missing secret or signature:', { hasSecret: !!secret, hasSignature: !!signature });
-    return true; // Allow if no signature verification is configured
-  }
-  
-  console.log('Verifying signature with secret:', secret);
-  console.log('Raw body for verification:', rawBody);
-  console.log('Received signature:', signature);
-  
+function lemonVerify(rawBody, signature, secret) {
+  if (!secret || !signature) return true;
   const hmac = crypto.createHmac('sha256', secret);
   const digest = hmac.update(rawBody || '').digest('hex');
-  
-  console.log('Calculated digest:', digest);
-  
   try {
-    const isValid = crypto.timingSafeEqual(Buffer.from(digest), Buffer.from(signature));
-    console.log('Signature verification result:', isValid);
-    return isValid;
-  } catch (error) {
-    console.error('Error in signature verification:', error);
+    return crypto.timingSafeEqual(Buffer.from(digest), Buffer.from(signature));
+  } catch {
     return false;
   }
 }
 
-export async function sendToFacebookCAPI({ eventName, value, currency, email, productName, sourceUrl }) {
+async function sendToFacebookCAPI({ eventName, value, currency, email, productName, sourceUrl }) {
   const pixelId = process.env.FB_PIXEL_ID;
   const accessToken = process.env.FB_ACCESS_TOKEN;
   const apiVersion = process.env.FB_API_VERSION || 'v19.0';
@@ -70,6 +56,13 @@ export async function sendToFacebookCAPI({ eventName, value, currency, email, pr
   const json = await resp.json().catch(() => ({}));
   return resp.ok ? { ok: true, json } : { ok: false, status: resp.status, json };
 }
+
+module.exports = {
+  sha256LowerTrim,
+  normalizePhoneE164,
+  lemonVerify,
+  sendToFacebookCAPI
+};
 
 
 
